@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: gui-svc
+  labels:
+    app: gui-nginx
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+  selector:
+    app: gui-nginx
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gui
+  labels:
+    app: gui-nginx
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: gui-nginx
+  template:
+    metadata:
+      labels:
+        app: gui-nginx
+    spec:
+      containers:
+      - name: gui-nginx
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 80
+

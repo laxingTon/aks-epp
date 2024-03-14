@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: my-ingress
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /test            # Path to match
+        pathType: Prefix         # Type of path matching
+        backend:
+          service:
+            name: gui-svc      # Name of the backend Service for /app1
+            port:
+              number: 80         # Port on the backend Service
+      - path: /test             # Another path to match
+        pathType: Prefix         # Type of path matching
+        backend:
+          service:
+            name: stp-svc      # Name of the backend Service for /app2
+            port:
+              number: 8080        # Port on the backend Service
+      - path: /test             # Another path to match
+        pathType: Prefix         # Type of path matching
+        backend:
+          service:
+            name: gateway-svc      # Name of the backend Service for /app2
+            port:
+              number: 8081         # Port on the backend Service

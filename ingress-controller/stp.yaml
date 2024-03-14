@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stp-java
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: stp-java
+  template:
+    metadata:
+      labels:
+        app: stp-java
+    spec:
+      containers:
+      - name: stp-java
+        image: docker.io/umaran1218/flightbookingsystemsample:dev
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: stp-svc
+spec:
+  type: ClusterIP
+  ports:
+  - port: 8080
+    targetPort: 8080
+  selector:
+    app: stp-java
