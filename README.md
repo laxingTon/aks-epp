@@ -1,13 +1,34 @@
+Kubectl deployment:
 
-NS1: NYCB
+cd kubectl
 
-http://172.212.54.170:80/
-http://172.212.8.52:8080/FlightBookingSystemSample/
-http://172.210.117.8:8081/
+namespace==>nycb:
+kubectl apply -f gui.yml -n nycb
+kubectl apply -f stp.yml -n nycb
+kubectl apply -f gateway.yml -n nycb
+-----------------------------------------------
+namespace==>tcb:
+kubectl apply -f gui.yml -n tcb
+kubectl apply -f stp.yml -n tcb
+kubectl apply -f gateway.yml -n tcb
 
+---------------------------------------------------------------
 
-NS2: TCB
+Helm chart deployment:
 
-http://172.212.15.19:80/
-http://172.210.113.176:8080/FlightBookingSystemSample/
-http://172.210.116.134:8081/
+cd helm-chart
+helm create gui
+helm create stp
+helm create gateway 
+----------------------------------------------------------------
+namespace==>nycb:
+helm install nycb-gui gui/ --namespace nycb
+helm install nycb-stp stp/ --namespace nycb
+helm install nycb-gateway gateway/ --namespace nycb
+----------------------------------------------------------------
+namespace==>tcb:
+helm install tcb-gui gui/ --namespace tcb
+helm install tcb-stp stp/ --namespace tcb
+helm install tcb-gateway gateway/ --namespace tcb
+
+----------------------------------------------------------------
